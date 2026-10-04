@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}
+    Manage Users | ConcreteStrength
+{% endblock %}
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4"
+            >
+                <div>
+                    <span class="admin-badge">Staff Area</span>
+                    <h1 class="page-title mt-2">Manage Users</h1>
+                    <p
+                        class="page-subtitle mb-0"
+                    >View registered users and monitor their activity.</p>
+                </div>
+                <a
+                    href="{% url 'admin_dashboard:dashboard' %}"
+                    class="btn btn-outline-secondary"
+                >
+                    Back to Dashboard
+                </a>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="get">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-lg-10">
+                                <label class="form-label">Search Users</label>
+                                <input
+                                    type="text"
+                                    name="search"
+                                    class="form-control"
+                                    placeholder="Search by username, name, or email"
+                                    value="{{ search_query }}"
+                                >
+                            </div>
+                            <div class="col-lg-2">
+                                <button type="submit" class="btn btn-primary w-100">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Registered Users</span>
+                    <span class="badge bg-primary">{{ users|length }}</span>
+                </div>
+                <div class="card-body">
+                    {% if users %}
+                        <div class="table-responsive">
+                            <table class="table align-middle admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>User</th>
+                                        <th>Email</th>
+                                        <th>Predictions</th>
+                                        <th>Status</th>
+                                        <th>Date Joined</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for account in users %}
+                                        <tr>
+                                            <td>{{ account.id }}</td>
+                                            <td>
+                                                <div class="admin-user-cell">
+                                                    <div
+                                                        class="admin-user-avatar"
+                                                    >{{ account.username|first|upper }}</div>
+                                                    <div>
+                                                        <strong>{{ account.username }}</strong>
+                                                        <div class="small text-muted">
+                                                            {% if account.first_name or account.last_name %}
+                                                                {{ account.first_name }}
+                                                                {{ account.last_name }}
+                                                            {% else %}
+                                                                No name provided
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {% if account.email %}
+                                                    {{ account.email }}
+                                                {% else %}
+                                                    <span class="text-muted">Not provided</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="prediction-count admin-value-badge"
+                                                >{{ account.prediction_count }}</span>
+                                            </td>
+                                            <td>
+                                                {% if account.is_superuser %}
+                                                    <span class="prediction-count admin-value-badge">Superuser</span>
+                                                {% elif account.is_staff %}
+                                                    <span class="prediction-count admin-value-badge">Staff</span>
+                                                {% else %}
+                                                    <span class="prediction-count admin-value-badge">User</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ account.date_joined|date:"M d, Y" }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="empty-state">
+                            <h5>No users found</h5>
+                            <p class="text-muted mb-0">Try changing your search term.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

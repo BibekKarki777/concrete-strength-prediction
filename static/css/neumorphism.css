@@ -1,0 +1,427 @@
+/* Neumorphic surfaces shared by public pages and both dashboards. */
+:root {
+    --background: #e8eeeb;
+    --surface: #e8eeeb;
+    --border: #cbd7d0;
+    --text-dark: #203c34;
+    --text-muted: #52685e;
+    --secondary: #52685e;
+    --neo-light: #ffffff;
+    --neo-shade: #c4d0c9;
+    --neo-raised: 9px 9px 20px var(--neo-shade),
+        -9px -9px 20px var(--neo-light);
+    --neo-small: 4px 4px 9px var(--neo-shade),
+        -4px -4px 9px var(--neo-light);
+    --neo-inset: inset 4px 4px 9px #cbd6cf,
+        inset -4px -4px 9px #ffffff;
+    --shadow: var(--neo-raised);
+    --radius: 22px;
+}
+
+body,
+.hero-section,
+.auth-section,
+.workflow-section,
+.site-footer,
+.value-strip {
+    background: var(--background);
+}
+
+.public-header,
+.workspace-header,
+.sidebar {
+    background: var(--surface);
+    border-color: transparent;
+}
+
+.public-header,
+.workspace-header {
+    box-shadow: 0 5px 14px #b6c6bb55;
+}
+
+.sidebar {
+    box-shadow: 6px 0 18px #b6c6bb55;
+}
+
+.brand img {
+    border-radius: 11px;
+    box-shadow: var(--neo-small);
+}
+
+.card,
+.auth-card,
+.feature-tile,
+.soft-box {
+    background: var(--surface);
+    border: 1px solid #f6faf680;
+    border-radius: var(--radius);
+    box-shadow: var(--neo-raised);
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid var(--border);
+}
+
+.feature-tile,
+.stat-card,
+.quick-action,
+.admin-action,
+.btn,
+.side-link {
+    transition: box-shadow 160ms ease, background-color 160ms ease,
+        color 160ms ease, transform 160ms ease;
+}
+
+.stat-card:hover,
+.feature-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 12px 12px 24px var(--neo-shade),
+        -10px -10px 24px var(--neo-light);
+}
+
+.btn {
+    border-radius: 13px;
+    box-shadow: var(--neo-small);
+}
+
+.btn-primary {
+    background: #0e7668;
+    border-color: #0e7668;
+    color: #ffffff;
+    box-shadow: 5px 5px 11px #bbcfc4, -5px -5px 11px #ffffff;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+    background: #095c51;
+    border-color: #095c51;
+    color: #ffffff;
+    box-shadow: inset 3px 3px 7px #06493f,
+        inset -3px -3px 7px #168575;
+}
+
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-light {
+    background: var(--surface);
+    color: var(--primary-dark);
+    border-color: #c5d3c9;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-secondary:hover,
+.btn-light:hover,
+.btn-outline-primary:active,
+.btn-outline-secondary:active,
+.btn-light:active {
+    background: var(--surface);
+    color: var(--primary-dark);
+    border-color: #a9bfb1;
+    box-shadow: var(--neo-inset);
+}
+
+.btn:disabled,
+.btn.disabled {
+    box-shadow: none;
+}
+
+.form-control,
+.form-select {
+    background-color: var(--surface);
+    border: 1px solid #bacdc1;
+    border-radius: 12px;
+    box-shadow: var(--neo-inset);
+}
+
+.form-control::placeholder {
+    color: #65796e;
+    opacity: 1;
+}
+
+.form-control:focus,
+.form-select:focus {
+    color: var(--text-dark);
+    background-color: var(--surface);
+    border-color: var(--primary);
+    box-shadow: var(--neo-inset), 0 0 0 3px #0e766830;
+}
+
+.side-link {
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.side-link:hover {
+    background: var(--surface);
+    box-shadow: var(--neo-small);
+}
+
+.side-link.active {
+    background: var(--surface);
+    color: var(--primary-dark);
+    box-shadow: var(--neo-inset);
+    border-left: 3px solid var(--primary);
+}
+
+.sidebar-note,
+.empty-state,
+.input-feature,
+.result-item,
+.model-feature-card {
+    background: var(--surface);
+    border-color: transparent;
+    border-radius: 14px;
+    box-shadow: var(--neo-inset);
+}
+
+.quick-action,
+.admin-action {
+    background: var(--surface);
+    border-color: #ffffff80;
+    border-radius: 14px;
+    box-shadow: var(--neo-small);
+}
+
+.quick-action:hover,
+.admin-action:hover {
+    background: var(--surface);
+    border-color: #b5cbbd;
+    box-shadow: var(--neo-inset);
+    transform: none;
+}
+
+.avatar,
+.profile-avatar,
+.admin-user-avatar,
+.feature-icon,
+.visual-icon,
+.step-number,
+.model-feature-number {
+    background: var(--surface);
+    color: var(--primary-dark);
+    box-shadow: var(--neo-small);
+}
+
+.strength-badge,
+.admin-badge,
+.prediction-count,
+.hero-badge {
+    background: var(--surface);
+    color: var(--primary-dark);
+    box-shadow: var(--neo-inset);
+}
+
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-dark);
+    --bs-table-border-color: var(--border);
+}
+
+.table thead th {
+    background: #dce6df;
+    color: #415e50;
+}
+
+.table tbody tr:hover {
+    background: #e0e9e3;
+}
+
+.material-visual > img,
+.about-illustration {
+    border: 6px solid var(--surface);
+    border-radius: 28px;
+    box-shadow: var(--neo-raised);
+}
+
+.material-visual figcaption {
+    background: var(--surface);
+    border-color: #ffffff90;
+    box-shadow: var(--neo-raised);
+}
+
+.cta-panel,
+.dashboard-banner,
+.result-strength-card,
+.model-primary-card {
+    box-shadow: 9px 9px 22px #b6c8bd, -9px -9px 22px #ffffff;
+}
+
+.cta-panel .btn {
+    box-shadow: 5px 5px 12px #0a2822, -3px -3px 10px #2f5849;
+}
+
+.auth-info-panel {
+    border-radius: 20px;
+    margin: 12px;
+    width: calc(41.666667% - 24px);
+    box-shadow: inset 3px 3px 9px #0c241c;
+}
+
+.auth-logo {
+    box-shadow: inset 3px 3px 7px #102e25,
+        inset -3px -3px 7px #365b4c;
+}
+
+.workflow-section,
+.value-strip {
+    border-color: var(--border);
+    box-shadow: inset 0 5px 12px #c4d0c945;
+}
+
+.site-footer {
+    border-color: transparent;
+    box-shadow: 0 -5px 16px #ffffff90;
+}
+
+@media (max-width: 991px) {
+    .public-links {
+        background: var(--surface);
+        box-shadow: var(--neo-raised);
+    }
+
+    .auth-info-panel {
+        width: calc(100% - 24px);
+    }
+}
+
+@media (max-width: 575px) {
+    :root {
+        --neo-raised: 5px 5px 12px var(--neo-shade),
+            -5px -5px 12px var(--neo-light);
+    }
+
+    .material-visual figcaption {
+        padding: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stat-card:hover,
+    .feature-tile:hover {
+        transform: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .card,
+    .auth-card,
+    .feature-tile,
+    .btn,
+    .side-link,
+    .form-control,
+    .form-select {
+        border: 1px solid CanvasText;
+    }
+
+    .side-link.active {
+        outline: 2px solid Highlight;
+    }
+}
+
+
+/* Statistic icons follow the same raised surface as other dashboard controls. */
+.stat-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.stat-heading .stat-label {
+    margin: 0;
+}
+
+.stat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    color: var(--primary-dark);
+    background: var(--surface);
+    border-radius: 12px;
+    box-shadow: var(--neo-small);
+}
+
+.history-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.history-actions form {
+    margin: 0;
+}
+
+.history-actions .btn {
+    white-space: nowrap;
+}
+
+/* Match the View Details geometry while retaining strength typography/colors. */
+.history-table .strength-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 7px 12px;
+    border: 1px solid var(--primary);
+    border-radius: 13px;
+    box-shadow: var(--neo-small);
+    white-space: nowrap;
+}
+
+
+/* Admin table values use button geometry without changing their text colors. */
+.admin-value-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    min-height: 36px;
+    padding: 7px 12px;
+    border: 1px solid currentColor;
+    border-radius: 13px;
+    box-shadow: var(--neo-small);
+    white-space: nowrap;
+}
+
+
+/* Shared delete confirmation for user and admin prediction tables. */
+.delete-dialog {
+    width: min(440px, calc(100% - 32px));
+    max-height: calc(100vh - 48px);
+    margin: auto;
+    padding: 0;
+    color: var(--text-dark);
+    background: var(--surface);
+    border: 1px solid #ffffff90;
+    border-radius: 22px;
+    box-shadow: 0 20px 60px #183c3540;
+}
+
+.delete-dialog::backdrop {
+    background: #102e2266;
+    backdrop-filter: blur(3px);
+}
+
+.delete-dialog-content {
+    padding: 30px;
+}
+
+.delete-dialog h2 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+}
+
+.delete-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}

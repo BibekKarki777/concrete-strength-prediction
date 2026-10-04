@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}
+    Prediction History | ConcreteStrength
+{% endblock %}
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4"
+            >
+                <div>
+                    <h1 class="page-title">Prediction History</h1>
+                    <p
+                        class="page-subtitle mb-0"
+                    >Review all of your previous concrete strength predictions.</p>
+                </div>
+                <a
+                    href="{% url 'prediction:predict' %}"
+                    class="btn btn-primary"
+                >+ New Prediction</a>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Your Predictions</span>
+                        <span class="badge bg-primary">{{ predictions|length }}</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if predictions %}
+                        <div class="table-responsive">
+                            <table class="table align-middle history-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Date</th>
+                                        <th>Age</th>
+                                        <th>Strength</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for prediction in predictions %}
+                                        <tr>
+                                            <td>{{ prediction.id }}</td>
+                                            <td>
+                                                <strong>{{ prediction.created_at|date:"M d, Y" }}</strong>
+                                                <div
+                                                    class="small text-muted"
+                                                >{{ prediction.created_at|date:"h:i A" }}</div>
+                                            </td>
+                                            <td>{{ prediction.age }} days</td>
+                                            <td>
+                                                <span class="strength-badge">
+                                                    {{ prediction.predicted_strength|floatformat:2 }}
+                                                    MPa
+                                                </span>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="history-actions">
+                                                    <a
+                                                        href="{% url 'prediction:result' prediction.id %}"
+                                                        class="btn btn-sm btn-outline-primary"
+                                                    >
+                                                        View Details
+                                                    </a>
+                                                    <form
+                                                        method="post"
+                                                        action="{% url 'prediction:delete' prediction.id %}"
+                                                        data-confirm-delete
+                                                    >
+                                                        {% csrf_token %}
+                                                        <button
+                                                            type="submit"
+                                                            class="btn btn-sm btn-outline-danger"
+                                                            aria-label="Delete prediction {{ prediction.id }}"
+                                                        >
+                                                            {% include "includes/icon.html" with name="trash" %}
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="empty-state">
+                            <h4>No predictions yet</h4>
+                            <p class="text-muted">
+                                Your prediction history will appear here
+                                after you make your first prediction.
+                            </p>
+                            <a
+                                href="{% url 'prediction:predict' %}"
+                                class="btn btn-primary"
+                            >Make First Prediction</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

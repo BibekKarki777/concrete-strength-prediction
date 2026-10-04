@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Admin Dashboard | ConcreteStrength
+{% endblock %}
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div
+                class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4"
+            >
+                <div>
+                    <span class="admin-badge">Staff Area</span>
+                    <h1 class="page-title mt-2">Admin Dashboard</h1>
+                    <p class="page-subtitle mb-0">
+                        Monitor users, predictions and the deployed
+                        Machine Learning model.
+                    </p>
+                </div>
+                <a href="{% url 'admin:index' %}" class="btn btn-outline-dark">Django Admin</a>
+            </div>
+            <div class="dashboard-banner">
+                <div>
+                    <h2>A clear view of your platform</h2>
+                    <p>Review user activity, explore predictions, and keep model information within reach.</p>
+                </div>
+                <img
+                    src="{% static 'images/concrete-lab.svg' %}"
+                    width="135"
+                    height="105"
+                    alt=""
+                >
+            </div>
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stat-card admin-stat-card h-100">
+                        <div class="card-body">
+                            <div class="stat-heading">
+                                <p class="stat-label">Total Users</p>
+                                <span class="stat-icon">
+                                    {% include "includes/icon.html" with name="user" %}
+                                </span>
+                            </div>
+                            <div class="stat-value">{{ total_users }}</div>
+                            <p class="stat-description">Registered accounts</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stat-card admin-stat-card h-100">
+                        <div class="card-body">
+                            <div class="stat-heading">
+                                <p class="stat-label">Total Predictions</p>
+                                <span class="stat-icon">
+                                    {% include "includes/icon.html" with name="cube" %}
+                                </span>
+                            </div>
+                            <div class="stat-value">{{ total_predictions }}</div>
+                            <p class="stat-description">System-wide predictions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stat-card admin-stat-card h-100">
+                        <div class="card-body">
+                            <div class="stat-heading">
+                                <p class="stat-label">Average Strength</p>
+                                <span class="stat-icon">
+                                    {% include "includes/icon.html" with name="average" %}
+                                </span>
+                            </div>
+                            <div class="stat-value">
+                                {% if average_strength %}
+                                    {{ average_strength|floatformat:2 }}
+                                    <small>MPa</small>
+                                {% else %}
+                                    --
+                                {% endif %}
+                            </div>
+                            <p class="stat-description">Across all predictions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stat-card admin-stat-card h-100">
+                        <div class="card-body">
+                            <div class="stat-heading">
+                                <p class="stat-label">Highest Strength</p>
+                                <span class="stat-icon">
+                                    {% include "includes/icon.html" with name="highest" %}
+                                </span>
+                            </div>
+                            <div class="stat-value">
+                                {% if highest_strength %}
+                                    {{ highest_strength|floatformat:2 }}
+                                    <small>MPa</small>
+                                {% else %}
+                                    --
+                                {% endif %}
+                            </div>
+                            <p class="stat-description">Highest recorded prediction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Recent Predictions</span>
+                            <a
+                                href="{% url 'admin_dashboard:predictions' %}"
+                                class="small text-decoration-none"
+                            >
+                                View All
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            {% if recent_predictions %}
+                                <div class="table-responsive">
+                                    <table class="table align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>User</th>
+                                                <th>Age</th>
+                                                <th>Strength</th>
+                                                <th>Date</th>
+                                                <th class="text-end">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for prediction in recent_predictions %}
+                                                <tr>
+                                                    <td>{{ prediction.id }}</td>
+                                                    <td>
+                                                        <strong>{{ prediction.user.username }}</strong>
+                                                    </td>
+                                                    <td>{{ prediction.age }} days</td>
+                                                    <td>
+                                                        <span class="strength-badge admin-value-badge">
+                                                            {{ prediction.predicted_strength|floatformat:2 }}
+                                                            MPa
+                                                        </span>
+                                                    </td>
+                                                    <td>{{ prediction.created_at|date:"M d, Y" }}</td>
+                                                    <td class="text-end">
+                                                        {% include "admin_dashboard/prediction_actions.html" with return_to="dashboard" %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <div class="empty-state">
+                                    <h5>No predictions available</h5>
+                                    <p class="text-muted mb-0">
+                                        Predictions made by users will
+                                        appear here.
+                                    </p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">Administration</div>
+                        <div class="card-body">
+                            <div class="d-grid gap-3">
+                                <a href="{% url 'admin_dashboard:users' %}" class="admin-action">
+                                    <div>
+                                        <strong>Manage Users</strong>
+                                        <span>View registered users and activity</span>
+                                    </div>
+                                    <div class="admin-action-arrow">→</div>
+                                </a>
+                                <a
+                                    href="{% url 'admin_dashboard:predictions' %}"
+                                    class="admin-action"
+                                >
+                                    <div>
+                                        <strong>All Predictions</strong>
+                                        <span>Review system-wide predictions</span>
+                                    </div>
+                                    <div class="admin-action-arrow">→</div>
+                                </a>
+                                <a
+                                    href="{% url 'admin_dashboard:model_info' %}"
+                                    class="admin-action"
+                                >
+                                    <div>
+                                        <strong>Model Information</strong>
+                                        <span>Review deployed ML model details</span>
+                                    </div>
+                                    <div class="admin-action-arrow">→</div>
+                                </a>
+                                <a href="{% url 'admin:index' %}" class="admin-action">
+                                    <div>
+                                        <strong>Django Admin</strong>
+                                        <span>Advanced database management</span>
+                                    </div>
+                                    <div class="admin-action-arrow">→</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

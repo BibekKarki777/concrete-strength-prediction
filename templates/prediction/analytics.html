@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% block title %}
+    Analytics | ConcreteStrength
+{% endblock %}
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4"
+            >
+                <div>
+                    <h1 class="page-title">Prediction Analytics</h1>
+                    <p
+                        class="page-subtitle mb-0"
+                    >Explore statistics and trends from your prediction history.</p>
+                </div>
+                <a
+                    href="{% url 'prediction:predict' %}"
+                    class="btn btn-primary"
+                >+ New Prediction</a>
+            </div>
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stat-card h-100">
+                        <div class="card-body">
+                            <div class="stat-heading">
+                                <p class="stat-label">Total Predictions</p>
+                                <span class="stat-icon">
+                                    {% include "includes/icon.html" with name="cube" %}
+                                </span>
+                            </div>
+                            <div class="stat-value">{{ total_predictions }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stat-card h-100">
+                        <div class="card-body">
+                            <div class="stat-heading">
+                                <p class="stat-label">Average Strength</p>
+                                <span class="stat-icon">
+                                    {% include "includes/icon.html" with name="average" %}
+                                </span>
+                            </div>
+                            <div class="stat-value">
+                                {% if average_strength %}
+                                    {{ average_strength|floatformat:2 }}
+                                    <small>MPa</small>
+                                {% else %}
+                                    --
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stat-card h-100">
+                        <div class="card-body">
+                            <div class="stat-heading">
+                                <p class="stat-label">Highest Strength</p>
+                                <span class="stat-icon">
+                                    {% include "includes/icon.html" with name="highest" %}
+                                </span>
+                            </div>
+                            <div class="stat-value">
+                                {% if highest_strength %}
+                                    {{ highest_strength|floatformat:2 }}
+                                    <small>MPa</small>
+                                {% else %}
+                                    --
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stat-card h-100">
+                        <div class="card-body">
+                            <div class="stat-heading">
+                                <p class="stat-label">Lowest Strength</p>
+                                <span class="stat-icon">
+                                    {% include "includes/icon.html" with name="lowest" %}
+                                </span>
+                            </div>
+                            <div class="stat-value">
+                                {% if lowest_strength %}
+                                    {{ lowest_strength|floatformat:2 }}
+                                    <small>MPa</small>
+                                {% else %}
+                                    --
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">Strength Prediction Trend</div>
+                <div class="card-body p-4">
+                    {% if total_predictions > 0 %}
+                        <div class="analytics-chart">
+                            <canvas id="strengthChart">
+                            </canvas>
+                        </div>
+                    {% else %}
+                        <div class="empty-state">
+                            <h4>No analytics available</h4>
+                            <p
+                                class="text-muted"
+                            >Make some predictions before viewing analytics.</p>
+                            <a
+                                href="{% url 'prediction:predict' %}"
+                                class="btn btn-primary"
+                            >Make Prediction</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ chart_labels|json_script:"chart-labels" }}
+    {{ chart_values|json_script:"chart-values" }}
+{% endblock %}
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+    const labelsElement =
+        document.getElementById("chart-labels");
+
+    const valuesElement =
+        document.getElementById("chart-values");
+
+    if (labelsElement && valuesElement) {
+
+        const labels = JSON.parse(
+            labelsElement.textContent
+        );
+
+        const values = JSON.parse(
+            valuesElement.textContent
+        );
+
+        if (values.length > 0) {
+
+            const chart = document.getElementById(
+                "strengthChart"
+            );
+
+            new Chart(chart, {
+
+                type: "line",
+
+                data: {
+
+                    labels: labels,
+
+                    datasets: [{
+
+                        label: "Predicted Strength (MPa)",
+
+                        data: values,
+
+                        fill: true,
+
+                        tension: 0.35,
+
+                        borderWidth: 3,
+
+                        pointRadius: 4,
+
+                        pointHoverRadius: 6
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+                            display: true
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: false,
+
+                            title: {
+                                display: true,
+                                text: "Strength (MPa)"
+                            }
+
+                        },
+
+                        x: {
+
+                            title: {
+                                display: true,
+                                text: "Prediction Date"
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+    }
+
+    </script>
+{% endblock %}

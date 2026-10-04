@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}
+    Model Information | ConcreteStrength
+{% endblock %}
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4"
+            >
+                <div>
+                    <span class="admin-badge">Staff Area</span>
+                    <h1 class="page-title mt-2">Model Information</h1>
+                    <p class="page-subtitle mb-0">
+                        Technical information about the deployed
+                        Machine Learning model.
+                    </p>
+                </div>
+                <a
+                    href="{% url 'admin_dashboard:dashboard' %}"
+                    class="btn btn-outline-secondary"
+                >
+                    Back to Dashboard
+                </a>
+            </div>
+            {% if error_message %}
+                <div class="alert alert-danger">{{ error_message }}</div>
+            {% elif model_info %}
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-4">
+                        <div class="model-primary-card h-100">
+                            <p>Deployed Model</p>
+                            <h3>{{ model_info.model_name }}</h3>
+                            <span>Supervised Regression</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-8">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="card stat-card h-100">
+                                    <div class="card-body">
+                                        <p class="stat-label">R² Score</p>
+                                        <div
+                                            class="stat-value"
+                                        >{{ model_info.r2|floatformat:4 }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card stat-card h-100">
+                                    <div class="card-body">
+                                        <p class="stat-label">MAE</p>
+                                        <div class="stat-value">
+                                            {{ model_info.mae|floatformat:2 }}
+                                            <small>MPa</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card stat-card h-100">
+                                    <div class="card-body">
+                                        <p class="stat-label">RMSE</p>
+                                        <div class="stat-value">
+                                            {{ model_info.rmse|floatformat:2 }}
+                                            <small>MPa</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Model Input Features</div>
+                    <div class="card-body">
+                        <p class="text-muted">
+                            The deployed model expects the following
+                            eight numerical input features.
+                        </p>
+                        <div class="row g-3">
+                            {% for feature in model_info.features %}
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="model-feature-card">
+                                        <div
+                                            class="model-feature-number"
+                                        >{{ forloop.counter }}</div>
+                                        <span>{{ feature }}</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-info mt-4 mb-0">
+                    <strong>Model usage:</strong>
+                    The deployed model estimates concrete compressive
+                    strength from concrete mixture properties and curing age.
+                    The prediction is intended for educational and
+                    preliminary analysis.
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

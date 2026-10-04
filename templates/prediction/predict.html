@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}
+    New Prediction | ConcreteStrength
+{% endblock %}
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10">
+                    <div class="mb-4">
+                        <h1 class="page-title">Concrete Strength Prediction</h1>
+                        <p class="page-subtitle">
+                            Enter the concrete mixture properties used
+                            by the trained Machine Learning model.
+                        </p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-header">Concrete Mix Information</div>
+                                <div class="card-body p-4">
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div class="row g-4">
+                                            {% for field in form %}
+                                                <div class="col-md-6">
+                                                    <label
+                                                        class="form-label"
+                                                        for="{{ field.id_for_label }}"
+                                                    >
+                                                        {{ field.label }}
+                                                    </label>
+                                                    {{ field }}
+                                                    <p class="form-help mb-0" id="{{ field.auto_id }}_helptext">{{ field.help_text }} &middot; Range: {{ field.field.min_value }} &ndash; {{ field.field.max_value }}</p>
+                                                    {% for error in field.errors %}
+                                                        <div
+                                                            class="text-danger small mt-1"
+                                                        >{{ error }}</div>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
+                                            <button
+                                                type="submit"
+                                                class="btn btn-primary"
+                                            >Predict Strength</button>
+                                            <a
+                                                href="{% url 'accounts:dashboard' %}"
+                                                class="btn btn-outline-secondary"
+                                            >
+                                                Cancel
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5>Model Information</h5>
+                                    <p class="text-muted small mt-3">
+                                        Your mixture values are processed
+                                        by the trained Random Forest
+                                        regression model.
+                                    </p>
+                                    <div class="prediction-info">
+                                        <span>Input Features</span>
+                                        <strong>8</strong>
+                                    </div>
+                                    <div class="prediction-info">
+                                        <span>Model</span>
+                                        <strong>Random Forest</strong>
+                                    </div>
+                                    <div class="prediction-info">
+                                        <span>Output</span>
+                                        <strong>MPa</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-info">
+                                <strong>Note:</strong>
+                                Enter values within the allowed ranges.
+                                The model was trained using concrete
+                                mixture data within these ranges.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

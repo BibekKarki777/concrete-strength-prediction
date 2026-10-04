@@ -1,0 +1,24 @@
+<div class="history-actions">
+    <a
+        href="{% url 'admin_dashboard:prediction_detail' prediction.id %}"
+        class="btn btn-sm btn-outline-primary"
+    >
+        View Details
+    </a>
+    <form
+        method="post"
+        action="{% url 'admin_dashboard:delete_prediction' prediction.id %}"
+        data-confirm-delete
+    >
+        {% csrf_token %}
+        <input type="hidden" name="return_to" value="{{ return_to }}">
+        <button
+            type="submit"
+            class="btn btn-sm btn-outline-danger"
+            aria-label="Delete prediction {{ prediction.id }}"
+        >
+            {% include "includes/icon.html" with name="trash" %}
+            Delete
+        </button>
+    </form>
+</div>

@@ -1,0 +1,16 @@
+{
+    "model_name": "Random Forest Regressor",
+    "features": [
+        "cement",
+        "blast_furnace_slag",
+        "fly_ash",
+        "water",
+        "superplasticizer",
+        "coarse_aggregate",
+        "fine_aggregate",
+        "age"
+    ],
+    "r2": 0.9076220663626147,
+    "mae": 3.4841024461028214,
+    "rmse": 5.249632068702903
+}

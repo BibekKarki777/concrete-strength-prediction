@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    About | ConcreteStrength
+{% endblock %}
+{% block content %}
+    <section class="hero-section about-hero">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-7">
+                    <span class="eyebrow">ABOUT CONCRETESTRENGTH</span>
+                    <h1 class="hero-title mt-4">
+                        Good questions.
+                        <br>
+                        <em>Solid foundations.</em>
+                    </h1>
+                    <p class="hero-text mt-4">Concrete is a combination of ingredients, time, and decisions. ConcreteStrength helps you explore that relationship through machine learning, with a workspace that makes complex inputs easier to understand.</p>
+                </div>
+                <div class="col-lg-5">
+                    <img
+                        class="about-illustration"
+                        src="{% static 'images/concrete-lab.svg' %}"
+                        width="640"
+                        height="560"
+                        alt="Concrete samples illustrated with measurement guides"
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-space">
+        <div class="container">
+            <div class="mb-5">
+                <span class="eyebrow">THE PURPOSE</span>
+                <h2 class="section-title mt-3">
+                    Material data.
+                    <br>
+                    Made more approachable.
+                </h2>
+                <p class="text-muted mt-3 mb-0">
+                    Built for students, researchers, and professionals exploring concrete mixtures.
+                    Bring mix inputs, predicted strength, and past results into a single organized workflow.
+                    Enter your mixture quantities and concrete age to estimate compressive strength in MPa.
+                    Revisit saved predictions to review the ingredients behind each result.
+                    Use dashboard statistics and visual analytics to explore your prediction history.
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <article class="feature-tile">
+                        <span class="feature-icon">{% include "includes/icon.html" with name="chart" %}</span>
+                        <h3>Learning from concrete data</h3>
+                        <p>The trained regression model uses eight numerical inputs to estimate compressive strength in megapascals (MPa). Every result stays connected to the quantities and age you entered.</p>
+                    </article>
+                </div>
+                <div class="col-md-6">
+                    <article class="feature-tile">
+                        <span class="feature-icon">{% include "includes/icon.html" with name="history" %}</span>
+                        <h3>A workspace that remembers</h3>
+                        <p>Your prediction history keeps past mixes close at hand. Review the ingredients behind each result and use analytics to explore the activity in your account.</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="workflow-section section-space">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-5">
+                    <span class="eyebrow">WHAT GOES INTO A PREDICTION</span>
+                    <h2 class="section-title mt-3">
+                        Eight inputs.
+                        <br>
+                        One useful starting point.
+                    </h2>
+                    <p class="text-muted mt-3">The dataset records each ingredient, including water and superplasticizer, in kilograms per cubic metre of mixture (kg/m&#179;). Age is recorded in days; predicted strength is reported in MPa. The prediction form shows the supported range for each input.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="input-grid">
+                        <div class="input-feature">
+                            <span>01</span>Cement (kg/m&#179;)
+                        </div>
+                        <div class="input-feature">
+                            <span>02</span>Blast furnace slag (kg/m&#179;)
+                        </div>
+                        <div class="input-feature">
+                            <span>03</span>Fly ash (kg/m&#179;)
+                        </div>
+                        <div class="input-feature">
+                            <span>04</span>Water (kg/m&#179;)
+                        </div>
+                        <div class="input-feature">
+                            <span>05</span>Superplasticizer (kg/m&#179;)
+                        </div>
+                        <div class="input-feature">
+                            <span>06</span>Coarse aggregate (kg/m&#179;)
+                        </div>
+                        <div class="input-feature">
+                            <span>07</span>Fine aggregate (kg/m&#179;)
+                        </div>
+                        <div class="input-feature">
+                            <span>08</span>Age of concrete (days)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container section-space">
+        <div class="cta-panel">
+            <div>
+                <span class="eyebrow">YOUR MIX, IN PERSPECTIVE</span>
+                <h2>Start exploring the possibilities.</h2>
+                <p>Make a prediction and build your own record of results.</p>
+            </div>
+            <a
+                class="btn btn-light btn-lg"
+                href="{% if user.is_authenticated %}{% url 'prediction:predict' %}{% else %}{% url 'accounts:register' %}{% endif %}"
+            >Open your workspace
+                {% include "includes/icon.html" with name="arrow" %}
+            </a>
+        </div>
+    </section>
+{% endblock %}

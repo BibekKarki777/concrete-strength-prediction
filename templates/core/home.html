@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    ConcreteStrength | Understand your concrete mix
+{% endblock %}
+{% block content %}
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <span class="eyebrow">
+                        <span class="status-dot"></span>
+                        MATERIAL SCIENCE MEETS MACHINE LEARNING
+                    </span>
+                    <h1 class="hero-title mt-4">
+                        Stronger insights.
+                        <br>
+                        <em>Better foundations.</em>
+                    </h1>
+                    <p class="hero-text mt-4">Turn your concrete mix into meaningful insights. Estimate compressive strength, explore your results, and keep every prediction in one clear workspace.</p>
+                    <div class="hero-actions">
+                        <a
+                            class="btn btn-primary btn-lg"
+                            href="{% if user.is_authenticated %}{% url 'prediction:predict' %}{% else %}{% url 'accounts:register' %}{% endif %}"
+                        >Explore your mix
+                            {% include "includes/icon.html" with name="arrow" %}
+                        </a>
+                        <a
+                            class="btn btn-outline-secondary btn-lg"
+                            href="{% url 'core:about' %}"
+                        >How it works</a>
+                    </div>
+                    <div class="hero-caption">
+                        8 mix inputs
+                        <span></span>
+                        Strength in MPa
+                        <span></span>
+                        Your saved history
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <figure class="material-visual">
+                        <img
+                            src="{% static 'images/concrete-lab.svg' %}"
+                            alt="An architectural illustration of stacked concrete samples on a measurement grid"
+                            width="640"
+                            height="560"
+                            fetchpriority="high"
+                        >
+                        <figcaption>
+                            <span class="visual-icon">{% include "includes/icon.html" with name="cube" %}</span>
+                            <div>
+                                <strong>A clearer view of every mix</strong>
+                                <small>From material composition to predicted strength</small>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="value-strip">
+        <div class="container">
+            <span>DESIGNED FOR EXPLORATION</span>
+            <strong>Mix composition</strong>
+            <strong>Strength prediction</strong>
+            <strong>Result history</strong>
+            <strong>Visual analytics</strong>
+        </div>
+    </section>
+    <section class="section-space">
+        <div class="container">
+            <div class="mb-5">
+                <span class="eyebrow">FROM INPUT TO INSIGHT</span>
+                <h2 class="section-title mt-3">
+                    Less friction.
+                    <br>
+                    More understanding.
+                </h2>
+                <p class="text-muted mt-3 mb-0">
+                    Bring your prediction workflow together with practical tools that keep the details easy to find.
+                    Enter your concrete mix using clear units and supported input ranges.
+                    Review the estimated strength alongside the ingredients and age you provided.
+                    Keep your saved results organized and explore your prediction activity through visual analytics.
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <article class="feature-tile">
+                        <span class="feature-icon">{% include "includes/icon.html" with name="cube" %}</span>
+                        <h3>Explore a concrete mix</h3>
+                        <p>Enter material quantities and curing age in a guided form with clear units and input limits.</p>
+                        <span class="tile-index">01 / COMPOSITION</span>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="feature-tile">
+                        <span class="feature-icon">{% include "includes/icon.html" with name="chart" %}</span>
+                        <h3>Make the result useful</h3>
+                        <p>View estimated compressive strength in MPa alongside the mix details behind the prediction.</p>
+                        <span class="tile-index">02 / PREDICTION</span>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="feature-tile">
+                        <span class="feature-icon">{% include "includes/icon.html" with name="history" %}</span>
+                        <h3>Keep the full picture</h3>
+                        <p>Revisit saved predictions and explore your activity through a personal analytics dashboard.</p>
+                        <span class="tile-index">03 / EXPLORATION</span>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="workflow-section section-space">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-5">
+                    <span class="eyebrow">A SIMPLE WORKFLOW</span>
+                    <h2 class="section-title mt-3">
+                        Your next insight
+                        <br>
+                        starts with a mix.
+                    </h2>
+                    <p class="text-muted mt-3">An organized experience from the first input to the result you return to later.</p>
+                    <a href="{% url 'core:about' %}" class="text-link">Get to know ConcreteStrength
+                        {% include "includes/icon.html" with name="arrow" %}
+                    </a>
+                </div>
+                <div class="col-lg-7">
+                    <div class="workflow-step">
+                        <span>01</span>
+                        <div>
+                            <h3>Create your workspace</h3>
+                            <p>Sign up to keep your predictions connected to your account.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <span>02</span>
+                        <div>
+                            <h3>Add your mix details</h3>
+                            <p>Enter seven ingredient quantities and the concrete's age.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <span>03</span>
+                        <div>
+                            <h3>Review and explore</h3>
+                            <p>Read your estimated strength, revisit results, and explore trends.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container section-space">
+        <div class="cta-panel">
+            <div>
+                <span class="eyebrow">BUILD YOUR UNDERSTANDING</span>
+                <h2>Give your next mix a closer look.</h2>
+                <p>A focused workspace for concrete strength exploration.</p>
+            </div>
+            <a
+                class="btn btn-light btn-lg"
+                href="{% if user.is_authenticated %}{% url 'prediction:predict' %}{% else %}{% url 'accounts:register' %}{% endif %}"
+            >Get started
+                {% include "includes/icon.html" with name="arrow" %}
+            </a>
+        </div>
+    </section>
+{% endblock %}

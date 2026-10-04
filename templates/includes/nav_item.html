@@ -1,0 +1,8 @@
+<a
+    href="{% url route %}"
+    class="side-link{% if request.resolver_match.view_name == route %} active{% endif %}"
+    {% if request.resolver_match.view_name == route %}aria-current="page"{% endif %}
+>
+    {% include "includes/icon.html" with name=icon %}
+    <span>{{ label }}</span>
+</a>
